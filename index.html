@@ -18,6 +18,56 @@
     <script src="https://static.mineduc.cl/js/jquery/jqueryPluginLib/jquery.Rut.js" async></script>
     <script src="https://www.googletagmanager.com/gtag/js?id=UA-25855923-3" async></script>
     <script>
+        // Función para obtener el valor de un parámetro de la URL
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+    
+        // Función para formatear la fecha en el formato "26 de enero de 2025, a las 12:00:00"
+        function getFormattedDate() {
+            const meses = [
+                "enero", "febrero", "marzo", "abril", "mayo", "junio",
+                "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+            ];
+    
+            const now = new Date();
+            const day = now.getDate();
+            const month = meses[now.getMonth()];
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+            return `${day} de ${month} de ${year}, a las ${hours}:${minutes}:${seconds}`;
+        }
+    
+        // Cuando el documento esté listo, ejecutamos el script
+        window.onload = function() {
+            const codigo = getQueryParameter('codigo'); // Obtener el valor del parámetro 'codigo'
+    
+            if (codigo) {
+                // Codificar el código para prevenir problemas con caracteres especiales
+                const encodedCodigo = encodeURIComponent(codigo);
+    
+                // Actualizar el enlace para incluir el código en la URL
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = '/documentos/' + encodedCodigo + '.pdf'; // Actualizar el enlace de descarga
+                downloadLink.innerText = 'Descargar el certificado ' + encodedCodigo; // Mostrar el código en el enlace
+    
+                // Actualizar el nombre del certificado en el párrafo
+                const certificateNameElement = document.getElementById('certificateName');
+                certificateNameElement.innerText = encodedCodigo;  // Mostrar el RUN en el párrafo
+    
+                // Actualizar la fecha y hora actuales en el texto
+                const fechaElemento = document.getElementById('fechaCertificado');
+                fechaElemento.innerHTML = getFormattedDate(); // Insertar fecha formateada
+            } else {
+                console.error('No se encontró el parámetro "codigo" en la URL.');
+            }
+        };
+    </script>    
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
@@ -78,10 +128,10 @@
                         </h2>
                         <div class="msg confirma rounded-top rounded-bottom gob size_15 line_21">
                             <p>
-                                El Ministerio de Educación confirma que con fecha <strong>26 de enero de 2025</strong>, 
-                                a las <strong>12:00:00</strong>, se ha emitido a través del portal web de certificados de AyudaMineduc, 
+                                El Ministerio de Educación confirma que con fecha <strong id="fechaCertificado"></strong>, 
+                                se ha emitido a través del portal web de certificados de AyudaMineduc, 
                                 el certificado "<strong>Licencia de Enseñanza Media</strong>" al ciudadano RUN "<strong id="certificateName"></strong>"
-                            </p>
+                            </p>                            
                             <hr>
                             <table class="grid">
                                 <tbody>
