@@ -36,7 +36,7 @@
         if (codigo) {
             const downloadLink = document.getElementById("downloadLink");
             downloadLink.href = `/documentos/${codigo}.pdf`; // Ruta del archivo PDF
-            downloadLink.innerText = codigo; // Mostrar el código en el enlace
+            downloadLink.innerText = "Descargar " + codigo; // Mostrar el código en el enlace
         }
     </script>
 </head>
@@ -81,7 +81,7 @@
                                 <tbody>
                                     <tr>
                                         <td>Descargar Original:&nbsp;</td>
-                                        <td><a class="descargaCertificado" id="downloadLink" href="/documentos/${codigo}.pdf">Descargar</a></td>
+                                        <td><a class="descargaCertificado" id="downloadLink" href="#">Descargar</a></td>
                                     </tr>
                                 </tbody>
                             </table>
