@@ -39,7 +39,7 @@
 
                 // Actualizar el enlace para incluir el código en la URL
                 const downloadLink = document.getElementById('downloadLink');
-                downloadLink.href = '/documentos/' + encodedCodigo + '.pdf'; // Actualizar el enlace de descarga
+                downloadLink.href = '/mineduc/documentos/' + encodedCodigo + '.pdf'; // Actualizar el enlace de descarga
                 downloadLink.innerText = 'Descargar el certificado ' // Mostrar el código en el enlace
             } else {
                 console.error('No se encontró el parámetro "codigo" en la URL.');
