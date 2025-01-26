@@ -16,57 +16,7 @@
     <script src="https://static.mineduc.cl/js/jquery/jqueryPluginLib/jquery.dataTables.min.js" async></script>
     <script src="https://static.mineduc.cl/js/jquery/jqueryPluginLib/jquery.maskedinput-1.3.min.js" async></script>
     <script src="https://static.mineduc.cl/js/jquery/jqueryPluginLib/jquery.Rut.js" async></script>
-    <script src="https://www.googletagmanager.com/gtag/js?id=UA-25855923-3" async></script>
-    <script>
-        // Función para obtener el valor de un parámetro de la URL
-        function getQueryParameter(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
-    
-        // Función para formatear la fecha en el formato "26 de enero de 2025, a las 12:00:00"
-        function getFormattedDate() {
-            const meses = [
-                "enero", "febrero", "marzo", "abril", "mayo", "junio",
-                "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
-            ];
-    
-            const now = new Date();
-            const day = now.getDate();
-            const month = meses[now.getMonth()];
-            const year = now.getFullYear();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-    
-            return `${day} de ${month} de ${year}, a las ${hours}:${minutes}:${seconds}`;
-        }
-    
-        // Cuando el documento esté listo, ejecutamos el script
-        window.onload = function() {
-            const codigo = getQueryParameter('codigo'); // Obtener el valor del parámetro 'codigo'
-    
-            if (codigo) {
-                // Codificar el código para prevenir problemas con caracteres especiales
-                const encodedCodigo = encodeURIComponent(codigo);
-    
-                // Actualizar el enlace para incluir el código en la URL
-                const downloadLink = document.getElementById('downloadLink');
-                downloadLink.href = '/documentos/' + encodedCodigo + '.pdf'; // Actualizar el enlace de descarga
-                downloadLink.innerText = 'Descargar el certificado ' + encodedCodigo; // Mostrar el código en el enlace
-    
-                // Actualizar el nombre del certificado en el párrafo
-                const certificateNameElement = document.getElementById('certificateName');
-                certificateNameElement.innerText = encodedCodigo;  // Mostrar el RUN en el párrafo
-    
-                // Actualizar la fecha y hora actuales en el texto
-                const fechaElemento = document.getElementById('fechaCertificado');
-                fechaElemento.innerHTML = getFormattedDate(); // Insertar fecha formateada
-            } else {
-                console.error('No se encontró el parámetro "codigo" en la URL.');
-            }
-        };
-    </script>    
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-25855923-3" async></script>    
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -166,5 +116,43 @@
             </footer>
         </div>
     </div>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-25855923-3');
+    
+        // Función para obtener el nombre del archivo y mostrarlo en la página
+        function updateCertificateName() {
+            var fileName = "5c901538-cbb8-4f24-bf3e-55f788b1afb4.pdf"; // Nombre del archivo dinámico
+            var fileBaseName = fileName.replace('.pdf', '');  // Extraer solo el nombre sin extensión
+            document.getElementById("certificateName").innerText = fileBaseName;
+        }
+    
+        // Función para obtener la fecha actual formateada
+        function updateCertificateDate() {
+            const meses = [
+                "enero", "febrero", "marzo", "abril", "mayo", "junio",
+                "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+            ];
+            
+            const now = new Date();
+            const day = now.getDate();
+            const month = meses[now.getMonth()];
+            const year = now.getFullYear();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            
+            const formattedDate = `${day} de ${month} de ${year}, a las ${hours}:${minutes}:${seconds}`;
+            document.getElementById("fechaCertificado").innerText = formattedDate;
+        }
+    
+        // Ejecutar ambas funciones al cargar la página
+        window.onload = function() {
+            updateCertificateName();
+            updateCertificateDate();
+        };
+    </script>        
 </body>
 </html>
