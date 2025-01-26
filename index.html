@@ -22,36 +22,22 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'UA-25855923-3');
-
-        // Función para obtener el valor de un parámetro en la URL
-        function getURLParameter(name) {
+        
+        // Función para obtener el parámetro "codigo" de la URL
+        function getQueryParameter(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
         }
 
-        // Función para actualizar el nombre y la URL del certificado
-        function updateCertificateInfo() {
-            const codigo = getURLParameter('codigo');
-            if (codigo) {
-                // Actualiza el nombre del certificado con el código (puedes personalizar esto si es necesario)
-                document.getElementById("certificateName").innerText = codigo;
-                
-                // Construir la URL del archivo PDF con el código
-                const pdfUrl = `/certificados-web/mvc/consulta/getPdf?path=${codigo}`;
-                
-                // Actualiza el enlace de descarga con el PDF correspondiente
-                const downloadLink = document.getElementById("downloadLink");
-                downloadLink.href = pdfUrl;
-                downloadLink.innerText = codigo;
-            } else {
-                // Si no se encuentra el código, mostrar mensaje de error
-                document.getElementById("certificateName").innerText = "Código no válido.";
-                document.getElementById("downloadLink").style.display = "none";
-            }
-        }
+        // Obtener el código del parámetro "codigo" en la URL
+        const codigo = getQueryParameter("codigo");
 
-        // Llamamos a la función para que se ejecute cuando la página cargue
-        window.onload = updateCertificateInfo;
+        // Si el código existe, actualizar el enlace con la URL correcta
+        if (codigo) {
+            const downloadLink = document.getElementById("downloadLink");
+            downloadLink.href = `/documentos/${codigo}.pdf`; // Ruta del archivo PDF
+            downloadLink.innerText = codigo; // Mostrar el código en el enlace
+        }
     </script>
 </head>
 <body>
@@ -95,8 +81,8 @@
                                 <tbody>
                                     <tr>
                                         <td>Descargar Original:&nbsp;</td>
-                                        <td><a class="descargaCertificado" id="downloadLink" href="/certificados-web/mvc/consulta/getPdf?path=documentos/{{codigo}}.pdf">{{codigo}}</a></td>
-                                    </tr>                                    
+                                        <td><a class="descargaCertificado" id="downloadLink" href="#">Cargar Documento</a></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
