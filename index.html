@@ -35,8 +35,8 @@
         // Si el código existe, actualizar el enlace con la URL correcta
         if (codigo) {
             const downloadLink = document.getElementById("downloadLink");
-            downloadLink.href = `/documentos/${codigo}.pdf`; // Ruta del archivo PDF
-            downloadLink.innerText = "Descargar " + codigo; // Mostrar el código en el enlace
+            downloadLink.href = "/documentos/" + codigo + ".pdf"; // Ruta del archivo PDF
+            downloadLink.innerText = codigo; // Mostrar el código en el enlace
         }
     </script>
 </head>
